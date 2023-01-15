@@ -1,4 +1,8 @@
-﻿namespace FinalHazirlik
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace FinalHazirlik
 {
     public class Yazi
     {
@@ -53,6 +57,21 @@
             return kelime;
         }
         
+        public static string Birlestir(string[] dizi, char karakter)    //diziyi birleştiren fonksiyon String.Join() karşılığı
+        {    
+            int uzunluk = Uzunluk_Bul_2(dizi);
+            string metin = "";
+            for (int i = 0; i < uzunluk; i++)
+            {
+                metin += dizi[i];
+                if (i != uzunluk - 1)
+                {
+                    metin += karakter;
+                }
+            }
+            return metin;
+        }
+        
         public static string SonunaEkleme(string metin, string ek)    //metnin sonuna ek ekleyen fonksiyon
         {
             int uzunluk = Uzunluk_Bul(metin);
@@ -69,7 +88,7 @@
             return metin_olustur;
         }
         
-        public static string BasdanBoslukEkle(string metin, int toplam)    //metnin başına boşluk ekleyen fonksiyon
+        public static string BasaBoslukEkle(string metin, int toplam)    //metnin başına boşluk ekleyen fonksiyon
         {
             int uzunluk = Uzunluk_Bul(metin);
             string metin_olustur = "";
@@ -82,7 +101,7 @@
             return metin_olustur;
         }
         
-        public static string SondanBoslukEkle(string metin, int toplam)   //metnin sonuna boşluk ekleyen fonksiyon
+        public static string SonaBoslukEkle(string metin, int toplam)   //metnin sonuna boşluk ekleyen fonksiyon
         {
             int uzunluk = Uzunluk_Bul(metin);
             string metin_olustur = metin;
@@ -102,6 +121,10 @@
             int harf = 0;
             for (int i = 0; i < uzunluk; i++)
             {
+                if(harf>=eski.Length)
+                {
+                    break;
+                }
                 if (i == pos)
                 {
                     metin_olustur[i] = yeni[harf];
@@ -111,7 +134,6 @@
             }
             return new string(metin_olustur);
         }
-        
         public static string BastanBoslukSil(string metin)      //metnin başındaki boşlukları silen fonksiyon
         {
             int uzunluk = Uzunluk_Bul(metin);
@@ -195,5 +217,67 @@
             }
             return index;
         } 
+        
+        public static int[] Bul(string metin, char karakter)      //verilen karakterin metinde konumu bulup geri döndüren fonksyon
+        {
+            int uzunluk = Uzunluk_Bul(metin);
+            int konum_sayisi = 0;
+            for (int i = 0; i < uzunluk; i++)
+            {
+                if (metin[i]==karakter)
+                {
+                    konum_sayisi++;
+                }
+            }
+            int k = 0;
+            int[] konumlar = new int[konum_sayisi];
+            for (int i = 0; i < uzunluk; i++)
+            {
+                if (metin[i]==karakter)
+                {
+                    konumlar[k] = i;
+                    k++;
+                }
+            }
+
+            return konumlar;
+        }
+        
+        public static string Kaldir(string metin, int index, int range)  //verilen indexden başlayarak range kadar karakteri silen fonksiyon
+        {
+            int uzunluk = Uzunluk_Bul(metin);
+            string metin_olustur = "";
+            for (int i = 0; i < uzunluk; i++)
+            {
+                if (i>=index && i<index+range)
+                {
+                    continue;
+                }
+                metin_olustur += metin[i];
+            }
+            return metin_olustur;
+        }
+        
+        public static string Buyut(string metin)  //metni büyük harfe çeviren fonksiyon
+        {
+            int uzunluk = Uzunluk_Bul(metin);
+            string metin_olustur = "";
+            for (int i = 0; i < uzunluk; i++)
+            {
+                metin_olustur += Convert.ToChar(Convert.ToInt32(metin[i]) - 32);
+            }
+            return metin_olustur;
+        }
+        
+        public static string Kucult(string metin)  //metni küçük harfe çeviren fonksiyon
+        {
+            int uzunluk = Uzunluk_Bul(metin);
+            string metin_olustur = "";
+            for (int i = 0; i < uzunluk; i++)
+            {
+                metin_olustur += Convert.ToChar(Convert.ToInt32(metin[i]) + 32);
+            }
+            return metin_olustur;
+        }
     }
 }
